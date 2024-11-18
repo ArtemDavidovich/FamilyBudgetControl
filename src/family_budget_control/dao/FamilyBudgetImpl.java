@@ -44,8 +44,18 @@ public class FamilyBudgetImpl implements FamilyBudget{
     }
 
     @Override
-    public void updateOutcome(int id, Outcome newOutcome) {
-
+    public boolean updateOutcome(int id, Outcome newOutcome) {
+        if (newOutcome == null) {
+           return false;
+        }
+        for (int i = 0; i < outcomes.size(); i++) {
+            Outcome currentOutcome = outcomes.get(i);
+            if (currentOutcome.getId() == id) {
+                outcomes.set(i, newOutcome);
+                break;
+            }
+        }
+        return true;
     }
 
     @Override

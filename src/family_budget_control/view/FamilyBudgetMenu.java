@@ -7,7 +7,7 @@ import java.util.Scanner;
   Предупреждение!!!!
   Я создал заглушки  для методов, которые можно заменить фактической логикой.
  */
-public class FamilyBudgetMenu {
+public class  FamilyBudgetMenu {
 
     private Scanner scanner = new Scanner(System.in);
 

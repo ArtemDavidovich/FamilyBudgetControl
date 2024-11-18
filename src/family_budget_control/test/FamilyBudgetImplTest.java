@@ -4,6 +4,7 @@ import family_budget_control.dao.FamilyBudget;
 import family_budget_control.dao.FamilyBudgetImpl;
 import family_budget_control.model.Outcome;
 import family_budget_control.model.Source;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -76,6 +77,9 @@ class FamilyBudgetImplTest {
     @Test
     @DisplayName("")
     void testUpdateOutcome() {
+        assertFalse(familyBudget.updateOutcome(1,null));
+        Source source = new Source("products", "lidl", 27.50);
+        assertTrue(familyBudget.updateOutcome(1, new Outcome(1, source, now.minusDays(13))));
     }
 
     @Test

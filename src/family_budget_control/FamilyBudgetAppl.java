@@ -1,6 +1,5 @@
 package family_budget_control;
 
-import family_budget_control.dao.FamilyBudgetImpl;
 import family_budget_control.model.Source;
 
 import java.io.*;
@@ -44,5 +43,6 @@ public class FamilyBudgetAppl implements Serializable{
         }
         return scanner.nextInt();
     }
+
 
 }
