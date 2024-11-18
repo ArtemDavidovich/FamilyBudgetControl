@@ -17,10 +17,7 @@ public class FamilyBudgetMenu {
         this.familyBudget = familyBudget;
     }
 
-    /*
-     * пункты меню.
-     */
-    private enum MenuOption {
+   private enum MenuOption {
         ADD_EXPENSE("Добавить расход"),
         REMOVE_EXPENSE("Удалить расход"),
         EDIT_EXPENSE("Редактировать расход"),
@@ -41,7 +38,7 @@ public class FamilyBudgetMenu {
         }
 
         /*
-         * Отобразить все пункты меню.
+          все пункты меню.
          */
         public static void displayOptions() {
             for (MenuOption option : MenuOption.values()) {
@@ -49,9 +46,6 @@ public class FamilyBudgetMenu {
             }
         }
 
-        /*
-         * Получить MenuOption по номеру.
-         */
         public static MenuOption fromIndex(int index) {
             if (index >= 1 && index <= values().length) {
                 return values()[index - 1];
