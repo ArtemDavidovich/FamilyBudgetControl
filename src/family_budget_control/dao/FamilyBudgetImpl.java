@@ -9,6 +9,7 @@ import java.util.function.Predicate;
 public class FamilyBudgetImpl implements FamilyBudget{
     @Override
     public boolean addOutcome(Outcome outcome) {
+
         return false;
     }
 
@@ -28,7 +29,7 @@ public class FamilyBudgetImpl implements FamilyBudget{
     }
 
     @Override
-    public void updateOutcome(int id, Outcome newOtcome) {
+    public void updateOutcome(int id, Outcome newOutcome) {
 
     }
 

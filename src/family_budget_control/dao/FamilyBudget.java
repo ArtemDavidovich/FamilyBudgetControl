@@ -16,7 +16,7 @@ public interface FamilyBudget {
 
     Outcome findOutcome(int id);
 
-    void updateOutcome(int id, Outcome newOtcome);
+    void updateOutcome(int id, Outcome newOutcome);
 
     void saveTasks(String fileName);
 
