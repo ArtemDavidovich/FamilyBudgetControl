@@ -1,72 +1,57 @@
 package family_budget_control.model;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Outcome {
-    private double products;
-    private double transport;
-    private double communication;
-    private double other;
 
-    public Outcome(double products, double transport, double communication, double other) {
-        this.products = products;
-        this.transport = transport;
-        this.communication = communication;
-        this.other = other;
+    private final int id;
+    private Source source;
+    private LocalDate date;
+
+    public Outcome(int id, Source source, LocalDate date) {
+        this.id = id;
+        this.source = source;
+        this.date = date;
     }
 
-    public double getProducts() {
-        return products;
+    public int getId() {
+        return id;
     }
 
-    public void setProducts(double products) {
-        this.products = products;
+    public Source getSource() {
+        return source;
     }
 
-    public double getTransport() {
-        return transport;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setTransport(double transport) {
-        this.transport = transport;
-    }
-
-    public double getCommunication() {
-        return communication;
-    }
-
-    public void setCommunication(double communication) {
-        this.communication = communication;
-    }
-
-    public double getOther() {
-        return other;
-    }
-
-    public void setOther(double other) {
-        this.other = other;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("Outcome{");
-        sb.append("products=").append(products);
-        sb.append(", transport=").append(transport);
-        sb.append(", communication=").append(communication);
-        sb.append(", other=").append(other);
-        sb.append('}');
-        return sb.toString();
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Outcome outcome)) return false;
-        return Double.compare(products, outcome.products) == 0 && Double.compare(transport, outcome.transport) == 0 && Double.compare(communication, outcome.communication) == 0 && Double.compare(other, outcome.other) == 0;
+        return id == outcome.id && Objects.equals(source, outcome.source) && Objects.equals(date, outcome.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(products, transport, communication, other);
+        return Objects.hash(id, source, date);
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Outcome{");
+        sb.append("id=").append(id);
+        sb.append(", source=").append(source);
+        sb.append(", date=").append(date);
+        sb.append('}');
+        return sb.toString();
+    }
+
 }// end of class
+

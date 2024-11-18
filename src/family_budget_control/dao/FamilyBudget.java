@@ -1,13 +1,12 @@
 package family_budget_control.dao;
 
 import family_budget_control.model.Outcome;
-import family_budget_control.model.Source;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.function.Predicate;
 
-public interface FamilyBudget {
+public interface                                    FamilyBudget {
     boolean addOutcome(Outcome outcome);
 
     Outcome removeOutcome(int id);
@@ -16,16 +15,22 @@ public interface FamilyBudget {
 
     Outcome findOutcome(int id);
 
-    void updateOutcome(int id, Outcome newOtcome);
+    boolean updateOutcome(int id, Outcome newOtcome);
 
     void saveTasks(String fileName);
 
     void loadTasks(String fileName);
-    List<Outcome> findOutcomeByPredicate(Predicate<Outcome> predicate);
-    void outcomeByProduct();
-    void outcomeByTransport();
-    void outcomeByMobNetworkAndInternet();
-    void outcomeByOthers();
 
+    List<Outcome> findOutcomeByPredicate(Predicate<Outcome> predicate);
+
+    List<Outcome> outcomeByProduct();
+
+    List<Outcome> outcomeByTransport();
+
+    List<Outcome> outcomeByMobNetworkAndInternet();
+
+    List<Outcome> outcomeByOthers();
+
+    int quantity();
 
 }

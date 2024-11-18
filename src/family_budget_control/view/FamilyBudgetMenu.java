@@ -1,4 +1,3 @@
-
 package family_budget_control.view;
 
 import family_budget_control.dao.FamilyBudget;

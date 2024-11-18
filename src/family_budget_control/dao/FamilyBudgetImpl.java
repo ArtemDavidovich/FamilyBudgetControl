@@ -3,13 +3,29 @@ package family_budget_control.dao;
 import family_budget_control.model.Outcome;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
 public class FamilyBudgetImpl implements FamilyBudget{
+
+    private List<Outcome> outcomes;
+    private int quantity;
+    private LocalDate time;
+
+    public FamilyBudgetImpl() {
+        this.outcomes = new ArrayList<>();
+        this.quantity = 0;
+    }
+
     @Override
     public boolean addOutcome(Outcome outcome) {
-        return false;
+        if(outcome == null || outcomes.contains(outcome)){
+            return false;
+        }
+        outcomes.add(outcome);
+        quantity = outcomes.size();
+        return true;
     }
 
     @Override
@@ -28,8 +44,18 @@ public class FamilyBudgetImpl implements FamilyBudget{
     }
 
     @Override
-    public void updateOutcome(int id, Outcome newOtcome) {
-
+    public boolean updateOutcome(int id, Outcome newOutcome) {
+        if (newOutcome == null) {
+           return false;
+        }
+        for (int i = 0; i < outcomes.size(); i++) {
+            Outcome currentOutcome = outcomes.get(i);
+            if (currentOutcome.getId() == id) {
+                outcomes.set(i, newOutcome);
+                break;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -48,23 +74,28 @@ public class FamilyBudgetImpl implements FamilyBudget{
     }
 
     @Override
-    public void outcomeByProduct() {
-
+    public List<Outcome> outcomeByProduct() {
+        return null;
     }
 
     @Override
-    public void outcomeByTransport() {
-
+    public List<Outcome> outcomeByTransport() {
+        return null;
     }
 
     @Override
-    public void outcomeByMobNetworkAndInternet() {
-
+    public List<Outcome> outcomeByMobNetworkAndInternet() {
+        return null;
     }
 
     @Override
-    public void outcomeByOthers() {
+    public List<Outcome> outcomeByOthers() {
+        return null;
+    }
 
+    @Override
+    public int quantity() {
+        return outcomes.size();
     }
 
 }
