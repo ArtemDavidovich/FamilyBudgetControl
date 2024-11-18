@@ -66,4 +66,5 @@ public class FamilyBudgetImpl implements FamilyBudget{
     public void outcomeByOthers() {
 
     }
+
 }
