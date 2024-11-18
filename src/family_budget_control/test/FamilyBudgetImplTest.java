@@ -1,10 +1,16 @@
 package family_budget_control.test;
 
 import family_budget_control.dao.FamilyBudget;
+import family_budget_control.dao.FamilyBudgetImpl;
+import family_budget_control.model.Outcome;
 import family_budget_control.model.Source;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDate;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class FamilyBudgetImplTest {
@@ -50,9 +56,9 @@ class FamilyBudgetImplTest {
         // Проверяем существующую запись
         Outcome foundOutcome = familyBudget.findOutcome(1); // Найти запись с ID 1
         assertNotNull(foundOutcome); // Убедиться, что запись найдена
-        assertEquals("products", foundOutcome.getSource().getCategory()); // Проверить категорию
-        assertEquals("rewe", foundOutcome.getSource().getName()); // Проверить название
-        assertEquals(27.50, foundOutcome.getSource().getAmount()); // Проверить сумму
+        assertEquals("products", foundOutcome.getSource().getType()); // Проверить категорию
+        assertEquals("rewe", foundOutcome.getSource().getContrAgent()); // Проверить название
+        assertEquals(27.50, foundOutcome.getSource().getSum()); // Проверить сумму
 
         // Проверяем отсутствие записи
         assertNull(familyBudget.findOutcome(7)); // Убедиться, что запись с ID 7 отсутствует
@@ -81,44 +87,44 @@ class FamilyBudgetImplTest {
     @Test
     @DisplayName("")
     void testOutcomeByProduct() {
-        List<Outcome> products = familyBudget.findOutcomesByCategory("products");
+        List<Outcome> products = familyBudget.outcomeByProduct("products");
         assertNotNull(products); // Убедиться, что результат не null
         assertEquals(2, products.size()); // Проверить количество расходов
 
         // Проверить, что все результаты принадлежат категории "products"
         for (Outcome outcome : products) {
-            assertEquals("products", outcome.getSource().getCategory());
+            assertEquals("products", outcome.getSource().getType());
         }
     }
 
     @Test
     @DisplayName("")
     void testOutcomeByTransport() {
-        List<Outcome> transport = familyBudget.findOutcomesByCategory("transport");
+        List<Outcome> transport = familyBudget.outcomeByTransport("transport");
         assertNotNull(transport);
         assertEquals(2, transport.size());
 
         for (Outcome outcome : transport) {
-            assertEquals("transport", outcome.getSource().getCategory());
+            assertEquals("transport", outcome.getSource().getType());
         }
     }
 
     @Test
     @DisplayName("")
     void testOutcomeByMobNetworkAndInternet() {
-        List<Outcome> communications = familyBudget.findOutcomesByCategory("communications");
+        List<Outcome> communications = familyBudget.outcomeByMobNetworkAndInternet("communications");
         assertNotNull(communications);
         assertEquals(1, communications.size());
 
         for (Outcome outcome : communications) {
-            assertEquals("communications", outcome.getSource().getCategory());
+            assertEquals("communications", outcome.getSource().getType());
         }
     }
 
     @Test
     @DisplayName("")
     void testOutcomeByOthers() {
-        List<Outcome> others = familyBudget.findOutcomesByCategory("others");
+        List<Outcome> others = familyBudget.outcomeByOthers("others");
         assertNotNull(others);
         assertTrue(others.isEmpty()); // Проверить, что список пуст, если расходов в категории нет
     }
