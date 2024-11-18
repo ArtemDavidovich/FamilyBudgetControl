@@ -52,4 +52,5 @@ public class Outcome {
         sb.append('}');
         return sb.toString();
     }
+
 }// end of class
