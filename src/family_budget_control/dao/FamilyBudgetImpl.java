@@ -1,7 +1,9 @@
 package family_budget_control.dao;
 
 import family_budget_control.model.Outcome;
+import family_budget_control.model.Source;
 
+import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +32,15 @@ public class FamilyBudgetImpl implements FamilyBudget{
 
     @Override
     public Outcome removeOutcome(int id) {
-        return null;
+        Outcome toRemove = outcomes.stream()
+                .filter(outcome -> outcome.getId() == id) //фильтрую элементы по соответствующему id
+                .findFirst()
+                .orElse(null);
+        if (toRemove != null) {
+            outcomes.remove(toRemove);//удалила найденный объект
+        }
+
+        return toRemove;//возвращаем удаленный объект или null
     }
 
     @Override
@@ -69,13 +79,26 @@ public class FamilyBudgetImpl implements FamilyBudget{
     }
 
     @Override
-    public void saveTasks(String fileName) {
-
+    public void saveTasks(String fileName) throws IOException {
+        // Поток используется для записи объектов в поток вывода, и в данном случае объект будет записан в файл.
+        //ObjectOutputStream используется для записи объектов в файл,
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
+            oos.writeObject(outcomes);//Этот метод записывает объект outcomes в поток ObjectOutputStream.
+        }
     }
 
     @Override
-    public void loadTasks(String fileName) {
+    public void loadTasks(String fileName) throws IOException {
+        //Для чтения объектов из файла используется ObjectInputStream
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
+            List<Outcome> loaded = (List<Outcome>) ois.readObject();//используется для чтения объекта из потока.
+            // List<Outcome>, который будет прочитан и приведён к нужному типу.
+            outcomes.clear();
+            outcomes.addAll(loaded);
 
+        } catch (ClassNotFoundException e) {
+            throw new IOException("Формат файла не поддерживается", e);
+        }
     }
 
     @Override

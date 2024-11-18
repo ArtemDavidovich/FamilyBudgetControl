@@ -2,11 +2,13 @@ package family_budget_control.dao;
 
 import family_budget_control.model.Outcome;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.function.Predicate;
 
-public interface                                    FamilyBudget {
+public interface FamilyBudget {
+  
     boolean addOutcome(Outcome outcome);
 
     Outcome removeOutcome(int id);
