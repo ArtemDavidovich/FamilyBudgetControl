@@ -7,13 +7,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class  FamilyBudgetImpl implements FamilyBudget{
+public class FamilyBudgetImpl implements FamilyBudget{
 
-    private final List<Outcome> outcomes = new ArrayList<>();
+    private List<Outcome> outcomes;
+    private int quantity;
+    private LocalDate time;
+
+    public FamilyBudgetImpl() {
+        this.outcomes = new ArrayList<>();
+        this.quantity = 0;
+    }
 
     @Override
     public boolean addOutcome(Outcome outcome) {
-        return false;
+        if(outcome == null || outcomes.contains(outcome)){
+            return false;
+        }
+        outcomes.add(outcome);
+        quantity = outcomes.size();
+        return true;
     }
 
     @Override
@@ -30,8 +42,6 @@ public class  FamilyBudgetImpl implements FamilyBudget{
     public Outcome findOutcome(int id) {
         return null;
     }
-
-
 
     @Override
     public boolean updateOutcome(int id, Outcome newOutcome) {
@@ -64,23 +74,28 @@ public class  FamilyBudgetImpl implements FamilyBudget{
     }
 
     @Override
-    public void outcomeByProduct() {
-
+    public List<Outcome> outcomeByProduct() {
+        return null;
     }
 
     @Override
-    public void outcomeByTransport() {
-
+    public List<Outcome> outcomeByTransport() {
+        return null;
     }
 
     @Override
-    public void outcomeByMobNetworkAndInternet() {
-
+    public List<Outcome> outcomeByMobNetworkAndInternet() {
+        return null;
     }
 
     @Override
-    public void outcomeByOthers() {
+    public List<Outcome> outcomeByOthers() {
+        return null;
+    }
 
+    @Override
+    public int quantity() {
+        return outcomes.size();
     }
 
 }
