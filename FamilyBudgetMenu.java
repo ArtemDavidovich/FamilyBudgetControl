@@ -5,9 +5,12 @@ import family_budget_control.dao.FamilyBudget;
 import family_budget_control.model.Outcome;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Класс FamilyBudgetMenu отвечает за текстовое меню с использованием enum для пунктов.
+ * Все пункты меню интегрированы с интерфейсом FamilyBudget.
+ */
 public class FamilyBudgetMenu {
 
     private final Scanner scanner = new Scanner(System.in);
@@ -17,8 +20,8 @@ public class FamilyBudgetMenu {
         this.familyBudget = familyBudget;
     }
 
-    /*
-     * пункты меню.
+    /**
+     * Перечисление MenuOption представляет все пункты меню.
      */
     private enum MenuOption {
         ADD_EXPENSE("Добавить расход"),
@@ -40,7 +43,7 @@ public class FamilyBudgetMenu {
             return description;
         }
 
-        /*
+        /**
          * Отобразить все пункты меню.
          */
         public static void displayOptions() {
@@ -49,7 +52,7 @@ public class FamilyBudgetMenu {
             }
         }
 
-        /*
+        /**
          * Получить MenuOption по номеру.
          */
         public static MenuOption fromIndex(int index) {
@@ -60,16 +63,17 @@ public class FamilyBudgetMenu {
         }
     }
 
-    /*
-     * главного меню.
+    /**
+     * Отображение главного меню.
      */
     public void displayMenu() {
         while (true) {
             System.out.println("\n===== Семейный бюджет - Главное меню =====");
-            MenuOption.displayOptions();
+            MenuOption.displayOptions(); // Вывод всех опций
+
             System.out.print("Выберите пункт меню: ");
             int choice = scanner.nextInt();
-            scanner.nextLine();
+            scanner.nextLine(); // Очистка буфера
 
             try {
                 MenuOption selectedOption = MenuOption.fromIndex(choice);
@@ -80,6 +84,9 @@ public class FamilyBudgetMenu {
         }
     }
 
+    /**
+     * Обработка выбранного пункта меню.
+     */
     private void handleMenuOption(MenuOption option) {
         switch (option) {
             case ADD_EXPENSE -> addExpense();
@@ -96,7 +103,7 @@ public class FamilyBudgetMenu {
         }
     }
 
-    // m
+    // Реализация методов
     private void addExpense() {
         System.out.println("Введите расходы:");
         System.out.print("Продукты: ");
@@ -110,9 +117,9 @@ public class FamilyBudgetMenu {
 
         Outcome outcome = new Outcome(products, transport, communication, other);
         if (familyBudget.addOutcome(outcome)) {
-            System.out.println("Расход добавлен.");
+            System.out.println("Расход успешно добавлен.");
         } else {
-            System.out.println("Ошибка расход не добавлен.");
+            System.out.println("Ошибка при добавлении расхода.");
         }
     }
 
@@ -136,7 +143,7 @@ public class FamilyBudgetMenu {
         double transport = scanner.nextDouble();
         System.out.print("Связь: ");
         double communication = scanner.nextDouble();
-        System.out.print("Разное: ");
+        System.out.print("Прочее: ");
         double other = scanner.nextDouble();
 
         Outcome newOutcome = new Outcome(products, transport, communication, other);
@@ -150,12 +157,11 @@ public class FamilyBudgetMenu {
         System.out.print("Введите конечную дату (YYYY-MM-DD): ");
         LocalDate toDate = LocalDate.parse(scanner.nextLine());
 
-        // Явный тип переменной вместо var
-        List<Outcome> outcomes = familyBudget.searchOutcome(fromDate, toDate);
+        var outcomes = familyBudget.searchOutcome(fromDate, toDate);
         if (outcomes.isEmpty()) {
             System.out.println("Расходы за указанный период не найдены.");
         } else {
-            System.out.println("Все расходы:");
+            System.out.println("Найденные расходы:");
             outcomes.forEach(System.out::println);
         }
     }
