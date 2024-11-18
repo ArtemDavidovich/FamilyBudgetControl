@@ -3,13 +3,29 @@ package family_budget_control.dao;
 import family_budget_control.model.Outcome;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
 public class FamilyBudgetImpl implements FamilyBudget{
+
+    private List<Outcome> outcomes;
+    private int quantity;
+    private LocalDate time;
+
+    public FamilyBudgetImpl() {
+        this.outcomes = new ArrayList<>();
+        this.quantity = 0;
+    }
+
     @Override
     public boolean addOutcome(Outcome outcome) {
-        return false;
+        if(outcome == null || outcomes.contains(outcome)){
+            return false;
+        }
+        outcomes.add(outcome);
+        quantity = outcomes.size();
+        return true;
     }
 
     @Override
@@ -65,6 +81,11 @@ public class FamilyBudgetImpl implements FamilyBudget{
     @Override
     public void outcomeByOthers() {
 
+    }
+
+    @Override
+    public int quantity() {
+        return outcomes.size();
     }
 
 }

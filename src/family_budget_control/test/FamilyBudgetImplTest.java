@@ -13,17 +13,18 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class FamilyBudgetImplTest {
     FamilyBudget familyBudget;
     LocalDate now = LocalDate.now();
+
+    Source source1 = new Source("products", "rewe", 27.50);
+    Source source2 = new Source("transport", "aral", 50);
+    Source source3 = new Source("products", "aldi", 18.65);
+    Source source4 = new Source("communications", "vodafone", 30);
+    Source source5 = new Source("others", "cinema", 10.50);
+    Source source6 = new Source("transport", "bus", 3.50);
+
     @BeforeEach
     void setUp() {
-        Source source1 = new Source("products", "rewe", 27.50);
-        Source source2 = new Source("transport", "aral", 27.50);
-        Source source3 = new Source("products", "aldi", 27.50);
-        Source source4 = new Source("communications", "vodafone", 27.50);
-        Source source5 = new Source("entertainment", "cinema", 27.50);
-        Source source6 = new Source("transport", "bus", 27.50);
 
         familyBudget = new FamilyBudgetImpl();
 
@@ -33,11 +34,17 @@ class FamilyBudgetImplTest {
         familyBudget.addOutcome(new Outcome(4, source4, now.minusDays(7)));
         familyBudget.addOutcome(new Outcome(5, source5, now.minusDays(7)));
         familyBudget.addOutcome(new Outcome(6, source6, now.minusDays(4)));
+
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("Adding new outcomes")
     void testAddOutcome() {
+        assertFalse(familyBudget.addOutcome(null));
+        assertFalse(familyBudget.addOutcome(new Outcome(1, source1, now.minusDays(13))));
+        Source source7 = new Source("products", "lidl", 15.25);
+        assertTrue(familyBudget.addOutcome(new Outcome(7, source7, now.minusDays(5))));
+        assertEquals(7, familyBudget.quantity());
     }
 
     @Test
@@ -128,4 +135,6 @@ class FamilyBudgetImplTest {
         assertNotNull(others);
         assertTrue(others.isEmpty()); // Проверить, что список пуст, если расходов в категории нет
     }
+
+    // TO DO test for quantity()
 }
