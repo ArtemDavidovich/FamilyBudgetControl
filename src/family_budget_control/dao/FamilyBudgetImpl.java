@@ -38,10 +38,20 @@ public class FamilyBudgetImpl implements FamilyBudget{
         return List.of();
     }
 
+
     @Override
     public Outcome findOutcome(int id) {
-        return null;
+        // Создаём предикат для поиска
+        Predicate<Outcome> findByIdPredicate = outcome -> outcome.getId() == id;
+
+        // Ищем объект с помощью предиката
+        return outcomes.stream()
+                .filter(findByIdPredicate)
+                .findFirst()
+                .orElse(null); // Возвращаем null, если объект не найден
     }
+
+
 
     @Override
     public boolean updateOutcome(int id, Outcome newOutcome) {
@@ -70,7 +80,13 @@ public class FamilyBudgetImpl implements FamilyBudget{
 
     @Override
     public List<Outcome> findOutcomeByPredicate(Predicate<Outcome> predicate) {
-        return List.of();
+        List<Outcome> outcomesPredicate = new ArrayList<>();
+        for (int i = 0; i < outcomes.size(); i++) {
+            if(predicate.test(outcomes.get(i))){
+                outcomesPredicate.add(outcomes.get(i));
+            }
+        }
+        return outcomesPredicate;
     }
 
     @Override
