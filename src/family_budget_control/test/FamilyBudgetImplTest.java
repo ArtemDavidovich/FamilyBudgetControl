@@ -81,20 +81,45 @@ class FamilyBudgetImplTest {
     @Test
     @DisplayName("")
     void testOutcomeByProduct() {
+        List<Outcome> products = familyBudget.findOutcomesByCategory("products");
+        assertNotNull(products); // Убедиться, что результат не null
+        assertEquals(2, products.size()); // Проверить количество расходов
+
+        // Проверить, что все результаты принадлежат категории "products"
+        for (Outcome outcome : products) {
+            assertEquals("products", outcome.getSource().getCategory());
+        }
     }
 
     @Test
     @DisplayName("")
     void testOutcomeByTransport() {
+        List<Outcome> transport = familyBudget.findOutcomesByCategory("transport");
+        assertNotNull(transport);
+        assertEquals(2, transport.size());
+
+        for (Outcome outcome : transport) {
+            assertEquals("transport", outcome.getSource().getCategory());
+        }
     }
 
     @Test
     @DisplayName("")
     void testOutcomeByMobNetworkAndInternet() {
+        List<Outcome> communications = familyBudget.findOutcomesByCategory("communications");
+        assertNotNull(communications);
+        assertEquals(1, communications.size());
+
+        for (Outcome outcome : communications) {
+            assertEquals("communications", outcome.getSource().getCategory());
+        }
     }
 
     @Test
     @DisplayName("")
     void testOutcomeByOthers() {
+        List<Outcome> others = familyBudget.findOutcomesByCategory("others");
+        assertNotNull(others);
+        assertTrue(others.isEmpty()); // Проверить, что список пуст, если расходов в категории нет
     }
 }
