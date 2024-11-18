@@ -89,7 +89,7 @@ class FamilyBudgetImplTest {
     void testOutcomeByProduct() {
         List<Outcome> products = familyBudget.outcomeByProduct("products");
         assertNotNull(products); // Убедиться, что результат не null
-        assertEquals(2, products.size()); // Проверить количество расходов
+        assertEquals(2, products.size());
 
         // Проверить, что все результаты принадлежат категории "products"
         for (Outcome outcome : products) {
