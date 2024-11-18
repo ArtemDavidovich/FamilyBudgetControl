@@ -44,7 +44,7 @@ public class FamilyBudgetImpl implements FamilyBudget{
     }
 
     @Override
-    public void updateOutcome(int id, Outcome newOtcome) {
+    public void updateOutcome(int id, Outcome newOutcome) {
 
     }
 
@@ -64,23 +64,23 @@ public class FamilyBudgetImpl implements FamilyBudget{
     }
 
     @Override
-    public void outcomeByProduct() {
-
+    public List<Outcome> outcomeByProduct() {
+        return null;
     }
 
     @Override
-    public void outcomeByTransport() {
-
+    public List<Outcome> outcomeByTransport() {
+        return null;
     }
 
     @Override
-    public void outcomeByMobNetworkAndInternet() {
-
+    public List<Outcome> outcomeByMobNetworkAndInternet() {
+        return null;
     }
 
     @Override
-    public void outcomeByOthers() {
-
+    public List<Outcome> outcomeByOthers() {
+        return null;
     }
 
     @Override

@@ -13,6 +13,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+class FamilyBudgetImplTest {
+
     FamilyBudget familyBudget;
     LocalDate now = LocalDate.now();
 
@@ -94,7 +96,7 @@ import static org.junit.jupiter.api.Assertions.*;
     @Test
     @DisplayName("")
     void testOutcomeByProduct() {
-        List<Outcome> products = familyBudget.outcomeByProduct("products");
+        List<Outcome> products = familyBudget.outcomeByProduct();
         assertNotNull(products); // Убедиться, что результат не null
         assertEquals(2, products.size()); // Проверить количество расходов
 
@@ -107,7 +109,7 @@ import static org.junit.jupiter.api.Assertions.*;
     @Test
     @DisplayName("")
     void testOutcomeByTransport() {
-        List<Outcome> transport = familyBudget.outcomeByTransport("transport");
+        List<Outcome> transport = familyBudget.outcomeByTransport();
         assertNotNull(transport);
         assertEquals(2, transport.size());
 
@@ -119,7 +121,7 @@ import static org.junit.jupiter.api.Assertions.*;
     @Test
     @DisplayName("")
     void testOutcomeByMobNetworkAndInternet() {
-        List<Outcome> communications = familyBudget.outcomeByMobNetworkAndInternet("communications");
+        List<Outcome> communications = familyBudget.outcomeByMobNetworkAndInternet();
         assertNotNull(communications);
         assertEquals(1, communications.size());
 
@@ -131,10 +133,11 @@ import static org.junit.jupiter.api.Assertions.*;
     @Test
     @DisplayName("")
     void testOutcomeByOthers() {
-        List<Outcome> others = familyBudget.outcomeByOthers("others");
+        List<Outcome> others = familyBudget.outcomeByOthers();
         assertNotNull(others);
         assertTrue(others.isEmpty()); // Проверить, что список пуст, если расходов в категории нет
     }
 
     // TO DO test for quantity()
+
 }
