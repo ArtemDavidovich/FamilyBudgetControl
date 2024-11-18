@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.function.Predicate;
 
-public interface FamilyBudget {
+public interface                                    FamilyBudget {
     boolean addOutcome(Outcome outcome);
 
     Outcome removeOutcome(int id);
@@ -16,7 +16,7 @@ public interface FamilyBudget {
 
     Outcome findOutcome(int id);
 
-    void updateOutcome(int id, Outcome newOtcome);
+    boolean updateOutcome(int id, Outcome newOtcome);
 
     void saveTasks(String fileName);
 
