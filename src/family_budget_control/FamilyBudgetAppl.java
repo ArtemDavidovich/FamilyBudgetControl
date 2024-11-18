@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class FamilyBudgetAppl implements Serializable{
     public static void main(String[] args) {
 
-        Source source = new Source(); // Экземпляр класса, управляющего расходами
+        Source source; // Экземпляр класса, управляющего расходами
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Welcome to Expense Manager!");

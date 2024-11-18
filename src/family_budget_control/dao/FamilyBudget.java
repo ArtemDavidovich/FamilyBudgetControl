@@ -27,5 +27,6 @@ public interface FamilyBudget {
     void outcomeByMobNetworkAndInternet();
     void outcomeByOthers();
 
+    int quantity();
 
 }
