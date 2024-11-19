@@ -32,15 +32,23 @@ public class FamilyBudgetImpl implements FamilyBudget{
 
     @Override
     public Outcome removeOutcome(int id) {
-        Outcome toRemove = outcomes.stream()
-                .filter(outcome -> outcome.getId() == id) //фильтрую элементы по соответствующему id
-                .findFirst()
-                .orElse(null);
-        if (toRemove != null) {
-            outcomes.remove(toRemove);//удалила найденный объект
-        }
 
-        return toRemove;//возвращаем удаленный объект или null
+        for (Outcome outcome : outcomes) { // допустим, outcomes - это список
+            if (outcome.getId() == id) {
+                outcomes.remove(outcome);
+                return outcome; // Возвращаем удалённый объект
+            }
+        }
+        return null; // Возвращаем null, если объект не найден
+//        Outcome toRemove = outcomes.stream()
+//                .filter(outcome -> outcome.getId() == id) //фильтрую элементы по соответствующему id
+//                .findFirst()
+//                .orElse(null);
+//        if (toRemove != null) {
+//            outcomes.remove(toRemove);//удалила найденный объект
+//        }
+//
+//        return toRemove;//возвращаем удаленный объект или null
     }
 
     @Override

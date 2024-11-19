@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -53,14 +54,33 @@ class FamilyBudgetImplTest {
     @Test
     @DisplayName("Removing outcome")
     void testRemoveOutcome() {
-        Outcome outcome = new Outcome(1, source1, LocalDate.now());
+        List<Outcome> outcomes = new ArrayList<>();
+        FamilyBudget familyBudget = new FamilyBudgetImpl();
 
-        familyBudget.addOutcome(outcome);
-        Outcome removeOutcome = familyBudget.removeOutcome(1);
-        assertNotNull(removeOutcome,"Удаленный результат не должен быть нулевым");
-        assertNull(familyBudget.findOutcome(1));
-        assertEquals(1,removeOutcome.getId(),"Удалённый результат должен иметь правильный ID.");
-        assertEquals(0,familyBudget.quantity(),"FamilyBudget должен быть пустым после удаления.");
+        // Создаю и добавляю объекты Outcome
+        Outcome outcome1 = new Outcome(1, source1, LocalDate.now());
+        Outcome outcome2 = new Outcome(2, source2, LocalDate.now());
+        familyBudget.addOutcome(outcome1);
+        familyBudget.addOutcome(outcome2);
+
+        // Удаляю объект с ID 1
+        Outcome removedOutcome = familyBudget.removeOutcome(1);
+
+        // Проверяю, что удалённый объект не null
+        assertNotNull(removedOutcome, "Удалённый объект не должен быть null");
+        // Проверяю, что удалён правильный объект
+        assertEquals(1, removedOutcome.getId(), "ID удалённого объекта должен быть 1");
+
+        // Проверяю, что объект с ID 1 больше не существует
+        Outcome foundOutcome = familyBudget.findOutcome(1);
+        assertNull(foundOutcome, "Объект с ID 1 должен быть удалён");
+
+        // Проверяю, что в списке остался только один элемент
+        assertEquals(1, familyBudget.quantity(), "Должен остаться только один объект в списке");
+        // Проверяю что остался правильный объект
+        Outcome remainingOutcome = familyBudget.findOutcome(2);
+        assertNotNull(remainingOutcome, "Объект с ID 2 должен существовать");
+        assertEquals(2, remainingOutcome.getId(), "ID оставшегося объекта должен быть 2");
     }
 
     @Test
