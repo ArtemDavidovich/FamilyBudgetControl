@@ -137,7 +137,11 @@ class FamilyBudgetImplTest {
     void testOutcomeByOthers() {
         List<Outcome> others = familyBudget.outcomeByOthers();
         assertNotNull(others);
-        assertTrue(others.isEmpty()); // Проверить, что список пуст, если расходов в категории нет
+        assertEquals(1, others.size());
+
+        for (Outcome outcome : others) {
+            assertEquals("others", outcome.getSource().getType());
+        }
     }
 
     @Test
