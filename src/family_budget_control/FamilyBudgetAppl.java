@@ -11,10 +11,6 @@ import java.io.Serializable;
 public class FamilyBudgetAppl implements Serializable {
 
     public static void main(String[] args) {
-//        try (FileOutputStream fout = new FileOutputStream("outcomes.dat")) {
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
 
         // Create a FamilyBudgetImpl instance (data access layer)
         FamilyBudgetImpl familyBudget = new FamilyBudgetImpl();
