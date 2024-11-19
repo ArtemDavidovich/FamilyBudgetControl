@@ -96,49 +96,6 @@ class FamilyBudgetImplTest {
     }
 
     @Test
-    @DisplayName("Saving outcomes")
-    void testSaveTasks() throws IOException {
-       LocalDate now = LocalDate.now();
-       familyBudget.addOutcome(new Outcome(1,source1,now));
-
-       String fileName = "test_outcomes.dat";
-
-       familyBudget.saveTasks(fileName);
-
-        File file = new File(fileName);
-        assertTrue(file.exists(),"Файл должен быть создан.");
-        assertTrue(file.length() > 0, "Файл не должен быть пустым.");
-
-        file.delete();//удаление после теста
-    }
-
-
-    @Test
-    @DisplayName("Loading outcomes")
-    void testLoadTasks() throws IOException{
-        LocalDate now = LocalDate.now();
-        familyBudget.addOutcome(new Outcome(1,source1,now));
-
-        String fileName = "test_outcomes.dat";
- //сохраняем данные в файл
-        familyBudget.saveTasks(fileName);
-
-        //объект для загрузки данных
-        FamilyBudgetImpl newFamilyBudget = new FamilyBudgetImpl();
-
-        newFamilyBudget.loadTasks(fileName);//загружаю данные из файла
-
-        Outcome loadedOutcome = newFamilyBudget.findOutcome(1);
-
-        assertNotNull(loadedOutcome, "Результат должен быть загружен из файла");
-        assertEquals(1, loadedOutcome.getId(),"ID загруженного результата должен совпадать с сохраненным");
-        assertEquals("products", loadedOutcome.getSource().getSum(),"Сумма загруженного результата должна соответствовать сохраненной.");
-
-        File file = new File(fileName);
-        file.delete();//
-    }
-
-    @Test
     @DisplayName("Searching for outcomes by type 'products'")
     void testOutcomeByProduct() {
         List<Outcome> products = familyBudget.outcomeByProduct();

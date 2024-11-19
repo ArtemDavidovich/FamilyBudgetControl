@@ -51,7 +51,12 @@ public class FamilyBudgetImpl implements FamilyBudget{
 
     @Override
     public Outcome findOutcome(int id) {
-        return (Outcome) findOutcomeByPredicate(outcome -> outcome.getId() == id);
+        for (Outcome outcome : outcomes) {
+            if(outcome.getId() == id){
+                return outcome;
+            }
+        }
+        return null;
     }
 
     @Override
