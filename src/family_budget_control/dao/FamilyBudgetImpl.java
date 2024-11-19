@@ -2,6 +2,7 @@ package family_budget_control.dao;
 
 import family_budget_control.model.Outcome;
 import family_budget_control.model.Source;
+import family_budget_control.view.FamilyBudgetMenu;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -9,11 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class FamilyBudgetImpl implements FamilyBudget{
+public class FamilyBudgetImpl implements FamilyBudget, Serializable{
 
     private List<Outcome> outcomes;
     private int quantity;
     private LocalDate time;
+//    FamilyBudget familyBudget = new FamilyBudgetImpl();
+//    FamilyBudgetMenu familyBudgetMenu = new FamilyBudgetMenu(familyBudget);
 
     public FamilyBudgetImpl() {
         this.outcomes = new ArrayList<>();
@@ -86,8 +89,9 @@ public class FamilyBudgetImpl implements FamilyBudget{
     public void saveTasks(String fileName) {
         // Поток используется для записи объектов в поток вывода, и в данном случае объект будет записан в файл.
         //ObjectOutputStream используется для записи объектов в файл,
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
-            oos.writeObject(outcomes);//Этот метод записывает объект outcomes в поток ObjectOutputStream.
+        List<Outcome> outcomeList = new ArrayList<>(outcomes);
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FamilyBudgetMenu.FILE_NAME))) {
+            oos.writeObject(outcomeList);//Этот метод записывает объект outcomes в поток ObjectOutputStream.
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -96,10 +100,16 @@ public class FamilyBudgetImpl implements FamilyBudget{
     @Override
     public void loadTasks(String fileName) {
         //Для чтения объектов из файла используется ObjectInputStream
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FamilyBudgetMenu.FILE_NAME))) {
             List<Outcome> loaded = (List<Outcome>) ois.readObject();//используется для чтения объекта из потока.
             // List<Outcome>, который будет прочитан и приведён к нужному типу.
-            outcomes.clear();
+            quantity = loaded.size();
+            System.out.println("List of outcomes:");
+            int outcomeNumber = 0;
+            for (Outcome t: loaded ) {
+                System.out.println((outcomeNumber++ + 1) + ". Тип расходов: " + t.getSource().getType() + ", Источник расходов: " + t.getSource().getContrAgent() + ", Сумма расходов: " + t.getSource().getSum() + ", Дата расходов: " + t.getDate()) ;
+            }
+            //outcomes.clear();
             outcomes.addAll(loaded);
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);

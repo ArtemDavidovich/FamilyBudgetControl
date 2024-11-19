@@ -4,13 +4,16 @@ import family_budget_control.dao.FamilyBudget;
 import family_budget_control.model.Outcome;
 import family_budget_control.model.Source;
 
+import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
-public class FamilyBudgetMenu {
+public class FamilyBudgetMenu implements Serializable {
 
-    public static final String FILE_NAME = "outcomes_list.dat";
+    public static final String FILE_NAME = "outcomes.dat";
 
     private final Scanner scanner = new Scanner(System.in);
     private final FamilyBudget familyBudget;
@@ -60,9 +63,11 @@ public class FamilyBudgetMenu {
      * главного меню.
      */
     public void displayMenu() {
+
         while (true) {
             System.out.println("\n===== Семейный бюджет - Главное меню =====");
             MenuOption.displayOptions();
+            System.out.println();
             System.out.print("Выберите пункт меню: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -95,9 +100,10 @@ public class FamilyBudgetMenu {
     // m
     private void addExpense() {
         System.out.println("Введите расходы:");
-        //System.out.print("ID: ");
-        //int id = scanner.nextInt();
-        int id = familyBudget.getIdForAppl();
+        System.out.print("ID: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+        //int id = familyBudget.getIdForAppl();
         System.out.print("Тип расходов: ");
         String type = scanner.nextLine();
         System.out.print("Источник расходов: ");
@@ -170,14 +176,14 @@ public class FamilyBudgetMenu {
     public void saveExpensesToFile() {
         System.out.print("Введите имя файла для сохранения: ");
         String fileName = scanner.nextLine();
-        familyBudget.saveTasks(fileName);
+        familyBudget.saveTasks(FILE_NAME);
         System.out.println("Расходы успешно сохранены.");
     }
 
     public void loadExpensesFromFile() {
         System.out.print("Введите имя файла для загрузки: ");
         String fileName = scanner.nextLine();
-        familyBudget.loadTasks(fileName);
+        familyBudget.loadTasks(FILE_NAME);
         System.out.println("Расходы успешно загружены.");
     }
 }
