@@ -19,22 +19,20 @@ import static org.junit.jupiter.api.Assertions.*;
 class FamilyBudgetImplTest {
     FamilyBudget familyBudget;
     LocalDate now = LocalDate.now();
-    Source source;
-    FamilyBudget familyBudget;
-    LocalDate now = LocalDate.now();    
+
+    Source source1 = new Source("products", "rewe", 27.50);
+    Source source2 = new Source("transport", "aral", 27.50);
+    Source source3 = new Source("products", "aldi", 27.50);
+    Source source4 = new Source("communications", "vodafone", 27.50);
+    Source source5 = new Source("others", "cinema", 27.50);
+    Source source6 = new Source("transport", "bus", 27.50);
 
     @BeforeEach
     void setUp() {
-        Source source1 = new Source("products", "rewe", 27.50);
-        Source source2 = new Source("transport", "aral", 27.50);
-        Source source3 = new Source("products", "aldi", 27.50);
-        Source source4 = new Source("communications", "vodafone", 27.50);
-        Source source5 = new Source("entertainment", "cinema", 27.50);
-        Source source6 = new Source("transport", "bus", 27.50);
       
         familyBudget = new FamilyBudgetImpl();
 
-        familyBudget.addOutcome(new Outcome(1, source1, now.minusDays(13)));
+        familyBudget.addOutcome(new Outcome(1, source1, now.minusDays(14)));
         familyBudget.addOutcome(new Outcome(2, source2, now.minusDays(11)));
         familyBudget.addOutcome(new Outcome(3, source3, now.minusDays(10)));
         familyBudget.addOutcome(new Outcome(4, source4, now.minusDays(7)));
@@ -47,15 +45,14 @@ class FamilyBudgetImplTest {
     void testAddOutcome() {
         assertFalse(familyBudget.addOutcome(null));
         assertFalse(familyBudget.addOutcome(new Outcome(1, source1, now.minusDays(13))));
-        Source source7 = new Source("products", "lidl", 15.25);
-        assertTrue(familyBudget.addOutcome(new Outcome(7, source7, now.minusDays(5))));
+        Source source = new Source("products", "lidl", 15.25);
+        assertTrue(familyBudget.addOutcome(new Outcome(7, source, now.minusDays(5))));
         assertEquals(7, familyBudget.quantity());
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("Removing outcome")
     void testRemoveOutcome() {
-        Source source1 = new Source("products","rewe",27.50);
         Outcome outcome = new Outcome(1, source1, LocalDate.now());
 
         familyBudget.addOutcome(outcome);
@@ -66,14 +63,19 @@ class FamilyBudgetImplTest {
         assertEquals(0,familyBudget.quantity(),"FamilyBudget должен быть пустым после удаления.");
     }
 
-
     @Test
-    @DisplayName("")
-    void testSearchOutcome() {
+    @DisplayName("Searching for outcomes by date range")
+    void testSearchOutcomeByDate() {
+        List<Outcome> actual = familyBudget.searchOutcomeByDate(now.minusDays(12), now.minusDays(8));
+        List<Outcome> expected = List.of(
+                new Outcome(2, source2, now.minusDays(11)),
+                new Outcome(3, source3, now.minusDays(10))
+        );
+        assertEquals(expected, actual);
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("Searching for outcome by ID")
     void testFindOutcome() {
         // Проверяем существующую запись
         Outcome foundOutcome = familyBudget.findOutcome(1); // Найти запись с ID 1
@@ -87,7 +89,7 @@ class FamilyBudgetImplTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("Updating outcome")
     void testUpdateOutcome() {
         assertFalse(familyBudget.updateOutcome(1,null));
         Source source = new Source("products", "lidl", 27.50);
@@ -95,13 +97,13 @@ class FamilyBudgetImplTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("Saving outcomes")
     void testSaveTasks() throws IOException {
        LocalDate now = LocalDate.now();
        Source source1 = new Source("products","rewe",27.50);
        familyBudget.addOutcome(new Outcome(1,source1,now));
 
-       String fileName = "test_tasks.dat";
+       String fileName = "test_outcomes.dat";
 
        familyBudget.saveTasks(fileName);
 
@@ -114,13 +116,13 @@ class FamilyBudgetImplTest {
 
 
     @Test
-    @DisplayName("")
+    @DisplayName("Loading outcomes")
     void testLoadTasks() throws IOException{
         LocalDate now = LocalDate.now();
         Source source1 =  new Source("products","rewe",27.50);
         familyBudget.addOutcome(new Outcome(1,source1,now));
 
-        String fileName = "test_tasks.dat";
+        String fileName = "test_outcomes.dat";
  //сохраняем данные в файл
         familyBudget.saveTasks(fileName);
 
@@ -140,12 +142,7 @@ class FamilyBudgetImplTest {
     }
 
     @Test
-    @DisplayName("")
-    void testFindOutcomeByPredicate() {
-    }
-
-    @Test
-    @DisplayName("")
+    @DisplayName("Searching for outcomes by type 'products'")
     void testOutcomeByProduct() {
         List<Outcome> products = familyBudget.outcomeByProduct();
         assertNotNull(products); // Убедиться, что результат не null
@@ -158,7 +155,7 @@ class FamilyBudgetImplTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("Searching for outcomes by type 'transport'")
     void testOutcomeByTransport() {
         List<Outcome> transport = familyBudget.outcomeByTransport();
         assertNotNull(transport);
@@ -170,7 +167,7 @@ class FamilyBudgetImplTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("Searching for outcomes by type 'communications'")
     void testOutcomeByMobNetworkAndInternet() {
         List<Outcome> communications = familyBudget.outcomeByMobNetworkAndInternet();
         assertNotNull(communications);
@@ -182,13 +179,17 @@ class FamilyBudgetImplTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("Searching for outcomes by type 'others'")
     void testOutcomeByOthers() {
         List<Outcome> others = familyBudget.outcomeByOthers();
         assertNotNull(others);
         assertTrue(others.isEmpty()); // Проверить, что список пуст, если расходов в категории нет
     }
 
-    // TO DO test for quantity()
+    @Test
+    @DisplayName("Checking actual quantity of the List")
+    void testQuantity(){
+        assertEquals(6, familyBudget.quantity());
+    }
 
 }

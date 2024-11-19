@@ -2,12 +2,15 @@ package family_budget_control.view;
 
 import family_budget_control.dao.FamilyBudget;
 import family_budget_control.model.Outcome;
+import family_budget_control.model.Source;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
 public class FamilyBudgetMenu {
+
+    public static final String FILE_NAME = "outcomes_list.dat";
 
     private final Scanner scanner = new Scanner(System.in);
     private final FamilyBudget familyBudget;
@@ -92,16 +95,19 @@ public class FamilyBudgetMenu {
     // m
     private void addExpense() {
         System.out.println("Введите расходы:");
-        System.out.print("Продукты: ");
-        double products = scanner.nextDouble();
-        System.out.print("Транспорт: ");
-        double transport = scanner.nextDouble();
-        System.out.print("Связь: ");
-        double communication = scanner.nextDouble();
-        System.out.print("Прочее: ");
-        double other = scanner.nextDouble();
-
-        Outcome outcome = new Outcome(products, transport, communication, other);
+        //System.out.print("ID: ");
+        //int id = scanner.nextInt();
+        int id = familyBudget.getIdForAppl();
+        System.out.print("Тип расходов: ");
+        String type = scanner.nextLine();
+        System.out.print("Источник расходов: ");
+        String contrAgent = scanner.nextLine();
+        System.out.print("Сумма расходов: ");
+        double sum = scanner.nextDouble();
+        Source source = new Source(type, contrAgent, sum);
+        System.out.print("Дата расходов (yyyy-MM-dd): ");
+        LocalDate date = LocalDate.parse(scanner.nextLine());
+        Outcome outcome = new Outcome(id, source, date);
         if (familyBudget.addOutcome(outcome)) {
             System.out.println("Расход добавлен.");
         } else {
@@ -123,16 +129,16 @@ public class FamilyBudgetMenu {
         System.out.print("Введите ID расхода для редактирования: ");
         int id = scanner.nextInt();
         System.out.println("Введите новые значения расходов:");
-        System.out.print("Продукты: ");
-        double products = scanner.nextDouble();
-        System.out.print("Транспорт: ");
-        double transport = scanner.nextDouble();
-        System.out.print("Связь: ");
-        double communication = scanner.nextDouble();
-        System.out.print("Разное: ");
-        double other = scanner.nextDouble();
-
-        Outcome newOutcome = new Outcome(products, transport, communication, other);
+        System.out.print("Тип расходов: ");
+        String type = scanner.nextLine();
+        System.out.print("Источник расходов: ");
+        String contrAgent = scanner.nextLine();
+        System.out.print("Сумма расходов: ");
+        double sum = scanner.nextDouble();
+        Source source = new Source(type, contrAgent, sum);
+        System.out.print("Дата расходов (yyyy-MM-dd): ");
+        LocalDate date = LocalDate.parse(scanner.nextLine());
+        Outcome newOutcome = new Outcome(id, source, date);
         familyBudget.updateOutcome(id, newOutcome);
         System.out.println("Расход обновлен.");
     }
@@ -144,7 +150,7 @@ public class FamilyBudgetMenu {
         LocalDate toDate = LocalDate.parse(scanner.nextLine());
 
         // Явный тип переменной вместо var
-        List<Outcome> outcomes = familyBudget.searchOutcome(fromDate, toDate);
+        List<Outcome> outcomes = familyBudget.searchOutcomeByDate(fromDate, toDate);
         if (outcomes.isEmpty()) {
             System.out.println("Расходы за указанный период не найдены.");
         } else {

@@ -13,7 +13,7 @@ public interface FamilyBudget {
 
     Outcome removeOutcome(int id);
 
-    List<Outcome> searchOutcome(LocalDate fromDate, LocalDate toDate);
+    List<Outcome> searchOutcomeByDate(LocalDate fromDate, LocalDate toDate);
 
     Outcome findOutcome(int id);
 
@@ -34,5 +34,8 @@ public interface FamilyBudget {
     List<Outcome> outcomeByOthers();
 
     int quantity();
+
+    int getIdForAppl();
+
 
 }
