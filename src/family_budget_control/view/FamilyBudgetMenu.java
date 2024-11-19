@@ -100,7 +100,7 @@ public class FamilyBudgetMenu implements Serializable {
     // m
     private void addExpense() {
         System.out.println("Введите расходы:");
-        System.out.print("ID: ");
+        System.out.print("№: ");
         int id = scanner.nextInt();
         scanner.nextLine();
         //int id = familyBudget.getIdForAppl();
@@ -110,6 +110,7 @@ public class FamilyBudgetMenu implements Serializable {
         String contrAgent = scanner.nextLine();
         System.out.print("Сумма расходов: ");
         double sum = scanner.nextDouble();
+        scanner.nextLine();
         Source source = new Source(type, contrAgent, sum);
         System.out.print("Дата расходов (yyyy-MM-dd): ");
         LocalDate date = LocalDate.parse(scanner.nextLine());
@@ -134,6 +135,7 @@ public class FamilyBudgetMenu implements Serializable {
     private void editExpense() {
         System.out.print("Введите ID расхода для редактирования: ");
         int id = scanner.nextInt();
+        scanner.nextLine();
         System.out.println("Введите новые значения расходов:");
         System.out.print("Тип расходов: ");
         String type = scanner.nextLine();
@@ -141,6 +143,7 @@ public class FamilyBudgetMenu implements Serializable {
         String contrAgent = scanner.nextLine();
         System.out.print("Сумма расходов: ");
         double sum = scanner.nextDouble();
+        scanner.nextLine();
         Source source = new Source(type, contrAgent, sum);
         System.out.print("Дата расходов (yyyy-MM-dd): ");
         LocalDate date = LocalDate.parse(scanner.nextLine());
@@ -166,23 +169,19 @@ public class FamilyBudgetMenu implements Serializable {
     }
 
     private void viewReport() {
-        System.out.println("Отчет по расходам:");
-        familyBudget.outcomeByProduct();
-        familyBudget.outcomeByTransport();
-        familyBudget.outcomeByMobNetworkAndInternet();
-        familyBudget.outcomeByOthers();
+        System.out.println("Отчет по расходам по категориям:");
+        System.out.println(familyBudget.outcomeByProduct());
+        System.out.println(familyBudget.outcomeByTransport());
+        System.out.println(familyBudget.outcomeByMobNetworkAndInternet());
+        System.out.println(familyBudget.outcomeByOthers());
     }
 
     public void saveExpensesToFile() {
-        System.out.print("Введите имя файла для сохранения: ");
-        String fileName = scanner.nextLine();
         familyBudget.saveTasks(FILE_NAME);
         System.out.println("Расходы успешно сохранены.");
     }
 
     public void loadExpensesFromFile() {
-        System.out.print("Введите имя файла для загрузки: ");
-        String fileName = scanner.nextLine();
         familyBudget.loadTasks(FILE_NAME);
         System.out.println("Расходы успешно загружены.");
     }

@@ -1,9 +1,10 @@
 package family_budget_control.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Outcome {
+public class Outcome implements Serializable {
 
     private final int id;
     private Source source;

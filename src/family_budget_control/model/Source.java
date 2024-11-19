@@ -1,8 +1,9 @@
 package family_budget_control.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Source implements Comparable<Source>{
+public class Source implements Comparable<Source>, Serializable {
     private String type;
     private String contrAgent;
     private double sum;
