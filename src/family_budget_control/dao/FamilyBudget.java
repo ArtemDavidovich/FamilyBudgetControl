@@ -17,7 +17,7 @@ public interface FamilyBudget {
 
     Outcome findOutcome(int id);
 
-    boolean updateOutcome(int id, Outcome newOtcome);
+    boolean updateOutcome(int id, Outcome newOutcome);
 
     void saveTasks(String fileName);
 

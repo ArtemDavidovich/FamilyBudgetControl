@@ -15,8 +15,7 @@ public class FamilyBudgetImpl implements FamilyBudget, Serializable{
     private List<Outcome> outcomes;
     private int quantity;
     private LocalDate time;
-//    FamilyBudget familyBudget = new FamilyBudgetImpl();
-//    FamilyBudgetMenu familyBudgetMenu = new FamilyBudgetMenu(familyBudget);
+
 
     public FamilyBudgetImpl() {
         this.outcomes = new ArrayList<>();
@@ -42,16 +41,7 @@ public class FamilyBudgetImpl implements FamilyBudget, Serializable{
                 return outcome; // Возвращаем удалённый объект
             }
         }
-        return null; // Возвращаем null, если объект не найден
-//        Outcome toRemove = outcomes.stream()
-//                .filter(outcome -> outcome.getId() == id) //фильтрую элементы по соответствующему id
-//                .findFirst()
-//                .orElse(null);
-//        if (toRemove != null) {
-//            outcomes.remove(toRemove);//удалила найденный объект
-//        }
-//
-//        return toRemove;//возвращаем удаленный объект или null
+        return null;
     }
 
     @Override
