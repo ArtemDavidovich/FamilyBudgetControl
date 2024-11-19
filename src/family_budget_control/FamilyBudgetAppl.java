@@ -3,9 +3,6 @@ package family_budget_control;
 import family_budget_control.dao.FamilyBudgetImpl;
 import family_budget_control.view.FamilyBudgetMenu;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.Serializable;
 
 public class FamilyBudgetAppl implements Serializable {
