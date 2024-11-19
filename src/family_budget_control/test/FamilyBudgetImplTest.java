@@ -32,7 +32,7 @@ class FamilyBudgetImplTest {
       
         familyBudget = new FamilyBudgetImpl();
 
-        familyBudget.addOutcome(new Outcome(1, source1, now.minusDays(14)));
+        familyBudget.addOutcome(new Outcome(1, source1, now.minusDays(13)));
         familyBudget.addOutcome(new Outcome(2, source2, now.minusDays(11)));
         familyBudget.addOutcome(new Outcome(3, source3, now.minusDays(10)));
         familyBudget.addOutcome(new Outcome(4, source4, now.minusDays(7)));
@@ -92,15 +92,13 @@ class FamilyBudgetImplTest {
     @DisplayName("Updating outcome")
     void testUpdateOutcome() {
         assertFalse(familyBudget.updateOutcome(1,null));
-        Source source = new Source("products", "lidl", 27.50);
-        assertTrue(familyBudget.updateOutcome(1, new Outcome(1, source, now.minusDays(13))));
+        assertTrue(familyBudget.updateOutcome(1, new Outcome(1, source1, now.minusDays(13))));
     }
 
     @Test
     @DisplayName("Saving outcomes")
     void testSaveTasks() throws IOException {
        LocalDate now = LocalDate.now();
-       Source source1 = new Source("products","rewe",27.50);
        familyBudget.addOutcome(new Outcome(1,source1,now));
 
        String fileName = "test_outcomes.dat";
@@ -119,7 +117,6 @@ class FamilyBudgetImplTest {
     @DisplayName("Loading outcomes")
     void testLoadTasks() throws IOException{
         LocalDate now = LocalDate.now();
-        Source source1 =  new Source("products","rewe",27.50);
         familyBudget.addOutcome(new Outcome(1,source1,now));
 
         String fileName = "test_outcomes.dat";

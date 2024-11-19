@@ -167,14 +167,14 @@ public class FamilyBudgetMenu {
         familyBudget.outcomeByOthers();
     }
 
-    private void saveExpensesToFile() {
+    public void saveExpensesToFile() {
         System.out.print("Введите имя файла для сохранения: ");
         String fileName = scanner.nextLine();
         familyBudget.saveTasks(fileName);
         System.out.println("Расходы успешно сохранены.");
     }
 
-    private void loadExpensesFromFile() {
+    public void loadExpensesFromFile() {
         System.out.print("Введите имя файла для загрузки: ");
         String fileName = scanner.nextLine();
         familyBudget.loadTasks(fileName);
