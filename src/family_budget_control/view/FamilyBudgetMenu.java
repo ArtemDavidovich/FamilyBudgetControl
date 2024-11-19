@@ -100,10 +100,9 @@ public class FamilyBudgetMenu implements Serializable {
     // m
     private void addExpense() {
         System.out.println("Введите расходы:");
-        System.out.print("№: ");
-        int id = scanner.nextInt();
-        scanner.nextLine();
-        //int id = familyBudget.getIdForAppl();
+//        System.out.print("№: ");
+//        int id = scanner.nextInt();
+//        scanner.nextLine();
         System.out.print("Тип расходов: ");
         String type = scanner.nextLine();
         System.out.print("Источник расходов: ");
@@ -114,6 +113,7 @@ public class FamilyBudgetMenu implements Serializable {
         Source source = new Source(type, contrAgent, sum);
         System.out.print("Дата расходов (yyyy-MM-dd): ");
         LocalDate date = LocalDate.parse(scanner.nextLine());
+        int id = familyBudget.getIdForAppl();
         Outcome outcome = new Outcome(id, source, date);
         if (familyBudget.addOutcome(outcome)) {
             System.out.println("Расход добавлен.");

@@ -143,10 +143,12 @@ public class FamilyBudgetImpl implements FamilyBudget, Serializable{
 
     @Override
     public int getIdForAppl() {
+        if (outcomes.isEmpty()) {
+            return 1;
+        }
         return outcomes.stream()
                 .map(Outcome::getId)
-                .skip(outcomes.size() - 1)
-                .findAny()
+                .reduce((first, second) -> second)
                 .orElse(1);
     }
 
